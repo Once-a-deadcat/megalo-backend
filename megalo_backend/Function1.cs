@@ -100,9 +100,7 @@ namespace megalo_backend
             Console.WriteLine(queryResults);
             await foreach (SampleEntity entity in queryResults)
             {
-                Console.WriteLine("Ç®ÉMÉÉÅ[");
                 log.LogInformation($"{entity.PartitionKey}\t{entity.RowKey}\t{entity.Content}\t");
-                Console.WriteLine("Ç®ÉMÉÉÅ[");
             }
 
             return new OkObjectResult(queryResults);
