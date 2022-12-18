@@ -56,9 +56,7 @@ namespace megalo_backend
         [OpenApiOperation(operationId: "Run", tags: new[] { "samples" })]
         [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
         [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(string), Description = "The **Json** parameter")]
-        //[OpenApiRequestBody(contentType: "application/json", bodyType: typeof(DiaryPayload), Description = "The **Json** parameter")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(string), Description = "The OK response")]
-        //[OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(DiaryEntity), Description = "The OK response")]
         [FunctionName("SamplePost")]
         public static async Task<IActionResult> SamplePosttRun(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
@@ -85,10 +83,7 @@ namespace megalo_backend
 
         [OpenApiOperation(operationId: "Run", tags: new[] { "samples" })]
         [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
-        //[OpenApiRequestBody(contentType: "application/json", bodyType: typeof(string), Description = "The **Json** parameter")]
-        //[OpenApiRequestBody(contentType: "application/json", bodyType: typeof(DiaryPayload), Description = "The **Json** parameter")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(string), Description = "The OK response")]
-        //[OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(DiaryEntity), Description = "The OK response")]
         [FunctionName("SampleGet")]
         public static async Task<IActionResult> SampleGetRun(
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
@@ -121,7 +116,6 @@ namespace megalo_backend
             TaskPayload payload = TaskPayload.ConvertTo(requestBody);
             Console.WriteLine(payload);
 
-            //string[] words = payload.DiaryDate.Split('-');
             var taskEntity = new TaskEntity()
             {
                 PartitionKey = payload.UserId,
@@ -179,7 +173,6 @@ namespace megalo_backend
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             TaskPayload payload = TaskPayload.ConvertTo(requestBody);
 
-            //string[] words = payload.DiaryDate.Split('-');
             Console.WriteLine($"{payload.UserId} + - + {payload.Date}");
             TaskEntity entity = tableClient.GetEntity<TaskEntity>(payload.UserId, $"{payload.Date}-{payload.TaskNumber}");
 
